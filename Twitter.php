@@ -375,9 +375,9 @@ class Twitter {
 		curl_close ($ch);
 		
 		if ($status == '200'){
-			return $this->_parse_returned($returned);
+			return $this->_parse_returned($returned, $url);
 		} else {
-			$error_data = $this->_parse_returned($returned);
+			$error_data = $this->_parse_returned($returned, $url);
 			$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
 			return false;
 		}
@@ -398,16 +398,28 @@ class Twitter {
 		curl_close ($ch);
 
 		if ($status == '200'){
-			return $this->_parse_returned($returned);
+			return $this->_parse_returned($returned, $url);
 		} else {
-			$error_data = $this->_parse_returned($returned);
+			$error_data = $this->_parse_returned($returned, $url);
 			$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
 			return false;
 		}
 	}
 	
-	function _parse_returned($xml){
-		return new SimpleXMLElement($xml); // if you don't like SimpleXML, change it!
+	function _parse_returned($xml, $url){
+		$segments = explode('.',$url);
+		
+		switch ($segments[2]){
+			case 'xml':
+			case 'atom':
+			case 'rss':
+				return new SimpleXMLElement($xml);
+				break;
+			case 'json':
+				return json_decode($xml);
+				break;
+		}
+		//return new SimpleXMLElement($xml); // if you don't like SimpleXML, change it!
 	}
 	
 	function _build_params($array, $query_string = TRUE){
