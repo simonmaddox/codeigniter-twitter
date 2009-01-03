@@ -17,6 +17,8 @@
 **/
 
 class Twitter {
+	var $type = 'xml';
+	
 	var $username;
 	var $password;
 	var $auth;
@@ -61,7 +63,7 @@ class Twitter {
 		$params = $this->_build_params(array('count' => $count, 'since' => $since, 'since_id' => $since_id, 'page' => $page));
 		
 		if (empty($this->friends_timeline)){
-			$this->friends_timeline = $this->_fetch('http://twitter.com/statuses/friends_timeline.xml' . $params);
+			$this->friends_timeline = $this->_fetch('http://twitter.com/statuses/friends_timeline.' . $this->type . $params);
 		}
 		
 		return $this->friends_timeline;
@@ -73,7 +75,7 @@ class Twitter {
 		$params = $this->_build_params(array('id' => $id, 'count' => $count, 'since' => $since, 'since_id' => $since_id, 'page' => $page));
 		
 		if (empty($this->user_timeline)){
-			$this->user_timeline = $this->_fetch('http://twitter.com/statuses/user_timeline.xml' . $params);
+			$this->user_timeline = $this->_fetch('http://twitter.com/statuses/user_timeline.' . $this->type . $params);
 		}
 		
 		return $this->user_timeline;
@@ -90,7 +92,7 @@ class Twitter {
 		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
 		
 		if (empty($this->replies)){
-			$this->replies = $this->_fetch('http://twitter.com/statuses/replies.xml' . $params);
+			$this->replies = $this->_fetch('http://twitter.com/statuses/replies.' . $this->type . $params);
 		}
 		
 		return $this->replies;
@@ -102,7 +104,7 @@ class Twitter {
 		$params = $this->_build_params(array('id' => $id, 'page' => $page));
 		
 		if (empty($this->friends)){
-			$this->friends = $this->_fetch('http://twitter.com/statuses/friends.xml' . $params);
+			$this->friends = $this->_fetch('http://twitter.com/statuses/friends.' . $this->type . $params);
 		}
 		
 		return $this->friends;
@@ -114,7 +116,7 @@ class Twitter {
 		$params = $this->_build_params(array('id' => $id, 'page' => $page));
 		
 		if (empty($this->followers)){
-			$this->followers = $this->_fetch('http://twitter.com/statuses/friends.xml' . $params);
+			$this->followers = $this->_fetch('http://twitter.com/statuses/friends.' . $this->type . $params);
 		}	
 			
 		return $this->followers;
@@ -122,7 +124,7 @@ class Twitter {
 	
 	function user_show($id = ''){
 		if (!$this->auth){ return false; }
-		return $this->_fetch('http://twitter.com/users/show/id.xml?id=' . $id);
+		return $this->_fetch('http://twitter.com/users/show/id.'.$this->type.'?id=' . $id);
 	}
 	
 	function direct_messages($since = '', $since_id = '', $page = ''){
@@ -131,7 +133,7 @@ class Twitter {
 		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
 		
 		if (empty($this->direct_messages)){
-			$this->direct_messages = $this->_fetch('http://twitter.com/direct_messages.xml' . $params);
+			$this->direct_messages = $this->_fetch('http://twitter.com/direct_messages.' . $this->type . $params);
 		}
 		
 		return $this->direct_messages;
@@ -143,7 +145,7 @@ class Twitter {
 		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
 		
 		if (empty($this->sent_direct_messages)){
-			$this->sent_direct_messages = $this->_fetch('http://twitter.com/direct_messages/sent.xml' . $params);
+			$this->sent_direct_messages = $this->_fetch('http://twitter.com/direct_messages/sent.' . $this->type . $params);
 		}
 		
 		return $this->sent_direct_messages;
@@ -151,13 +153,13 @@ class Twitter {
 	
 	function friendship_exists($user_a = '', $user_b = ''){
 		if (!$this->auth){ return false; }
-		$friends = (string) $this->_fetch('http://twitter.com/friendships/exists.xml?user_a='.$user_a.'&user_b=' . $user_b);
+		$friends = (string) $this->_fetch('http://twitter.com/friendships/exists.'.$this->type.'?user_a='.$user_a.'&user_b=' . $user_b);
 		return ($friends == 'true') ? true : false;
 	}
 	
 	function rate_limit_status(){
 		if (!$this->auth){ return false; }
-		return $this->_fetch('http://twitter.com/account/rate_limit_status.xml');
+		return $this->_fetch('http://twitter.com/account/rate_limit_status.' . $this->type);
 	}
 	
 	function favorites($id = '', $page = ''){
@@ -166,14 +168,14 @@ class Twitter {
 		$params = $this->_build_params(array('id' => $id, 'page' => $page));
 		
 		if (empty($this->favorites)){
-			$this->favorites = $this->_fetch('http://twitter.com/favorites.xml');
+			$this->favorites = $this->_fetch('http://twitter.com/favorites.' . $this->type);
 		}
 		
 		return $this->favorites;
 	}
 	
 	function downtime_schedule(){
-		return $this->_fetch('http://twitter.com/help/downtime_schedule.xml');
+		return $this->_fetch('http://twitter.com/help/downtime_schedule.' . $this->type);
 	}
 	
 	/*
@@ -188,7 +190,7 @@ class Twitter {
 			$params['in_reply_to_status_id'] = $in_reply_to_status_id;
 		}
 		
-		return $this->_post('http://twitter.com/statuses/update.xml', $params);
+		return $this->_post('http://twitter.com/statuses/update.' . $this->type, $params);
 	}
 	
 	function destroy($id = ''){
@@ -198,7 +200,7 @@ class Twitter {
 			$params['id'] = $id;
 		}
 		
-		return $this->_post('http://twitter.com/statuses/destroy/id.xml', $params);
+		return $this->_post('http://twitter.com/statuses/destroy/id.' . $this->type, $params);
 	}
 	
 	function new_direct_message($user = '', $text = ''){
@@ -212,7 +214,7 @@ class Twitter {
 			$params['text'] = $text;
 		}
 		
-		return $this->_post('http://twitter.com/direct_messages/new.xml', $params);
+		return $this->_post('http://twitter.com/direct_messages/new.' . $this->type, $params);
 	}
 	
 	function destroy_direct_message($id = ''){
@@ -222,7 +224,7 @@ class Twitter {
 			$params['id'] = $id;
 		}
 		
-		return $this->_post('http://twitter.com/direct_messages/destroy/id.xml', $params);
+		return $this->_post('http://twitter.com/direct_messages/destroy/id.' . $this->type, $params);
 	}
 	
 	function create_friendship($id = '', $follow = ''){
@@ -238,7 +240,7 @@ class Twitter {
 			$params['follow'] = $follow;
 		}
 				
-		return $this->_post('http://twitter.com/friendships/create/id.xml', $params);
+		return $this->_post('http://twitter.com/friendships/create/id.' . $this->type, $params);
 	}
 	
 	function destroy_friendship($id = ''){
@@ -248,7 +250,7 @@ class Twitter {
 			$params['id'] = $id;
 		}
 		
-		return $this->_post('http://twitter.com/friendships/destroy/id.xml', $params);
+		return $this->_post('http://twitter.com/friendships/destroy/id.' . $this->type, $params);
 	}
 	
 	function update_profile($name = '', $email = '', $url = '', $location = '', $description = ''){
@@ -274,7 +276,7 @@ class Twitter {
 			$params['description'] = (strlen($description) > 160) ? substr($description,0,160) : $description;
 		}
 		
-		return $this->_post('http://twitter.com/account/update_profile.xml', $params);
+		return $this->_post('http://twitter.com/account/update_profile.' . $this->type, $params);
 	}
 	
 	/*
