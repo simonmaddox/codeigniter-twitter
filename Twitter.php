@@ -317,7 +317,8 @@ class Twitter {
 		if ($status == '200'){
 			return $this->_parse_returned($returned);
 		} else {
-			$this->last_error = $status;
+			$error_data = $this->_parse_returned($returned);
+			$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
 			return false;
 		}
 	}
@@ -339,7 +340,8 @@ class Twitter {
 		if ($status == '200'){
 			return $this->_parse_returned($returned);
 		} else {
-			$this->last_error = $status;
+			$error_data = $this->_parse_returned($returned);
+			$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
 			return false;
 		}
 	}
@@ -363,7 +365,7 @@ class Twitter {
 	}
 	
 	function get_last_error(){
-		return $this->last_errow;
+		return $this->last_error;
 	}
 	
 }
