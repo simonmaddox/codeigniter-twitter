@@ -17,12 +17,16 @@ the class.
 Future
 ------
 
-At the moment, parameters (such as "since") passed to most GET 
-methods don't work. This will be fixed in v1.1
+<s>At the moment, parameters (such as "since") passed to most GET 
+methods don't work. This will be fixed in v1.1</s>
 
-Every method will either return a boolean or a SimpleXML object. 
+<s>Every method will either return a boolean or a SimpleXML object. 
 I'd like to change this so that something more meaningful is 
-returned.
+returned.</s>
+
+JSON support
+
+Twitter Search
 
 Extra
 -----
