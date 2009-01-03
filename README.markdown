@@ -17,13 +17,6 @@ the class.
 Future
 ------
 
-<s>At the moment, parameters (such as "since") passed to most GET 
-methods don't work. This will be fixed in v1.1</s>
-
-<s>Every method will either return a boolean or a SimpleXML object. 
-I'd like to change this so that something more meaningful is 
-returned.</s>
-
 JSON support
 
 Twitter Search
