@@ -17,9 +17,7 @@ the class.
 Future
 ------
 
-JSON support
-
-Twitter Trends (requires JSON)
+What else is there?
 
 Extra
 -----
