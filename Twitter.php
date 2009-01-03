@@ -18,6 +18,7 @@
 
 class Twitter {
 	var $type = 'xml';
+	var $user_agent = 'CodeIgniter-Twitter Library by Simon Maddox (http://simonmaddox.com)';
 	
 	var $username;
 	var $password;
@@ -288,6 +289,7 @@ class Twitter {
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->username . ':' . $this->password);
+		curl_setopt($ch, CURLOPT_USERAGENT, $this->user_agent);
 		$returned = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close ($ch);
@@ -306,6 +308,7 @@ class Twitter {
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->username . ':' . $this->password);
+		curl_setopt($ch, CURLOPT_USERAGENT, $this->user_agent);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		$returned = curl_exec($ch);
