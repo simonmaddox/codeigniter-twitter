@@ -19,7 +19,7 @@ Future
 
 JSON support
 
-Twitter Search
+Twitter Trends (requires JSON)
 
 Extra
 -----
