@@ -417,17 +417,22 @@ class Twitter {
 	function _parse_returned($xml, $url){
 		$segments = explode('.',$url);
 		
-		switch (end($segments)){
+		$type = end($segments);
+		
+		switch ($type){
 			case 'xml':
 			case 'atom':
 			case 'rss':
-				return new SimpleXMLElement($xml);
+				return $this->_build_return(new SimpleXMLElement($xml),$type);
 				break;
 			case 'json':
-				return json_decode($xml);
+				return $this->_build_return(json_decode($xml),$type);
 				break;
 		}
-		//return new SimpleXMLElement($xml); // if you don't like SimpleXML, change it!
+	}
+	
+	function _build_return($data,$type){
+		return $data;
 	}
 	
 	function _build_params($array, $query_string = TRUE){
