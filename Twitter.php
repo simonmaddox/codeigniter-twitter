@@ -65,9 +65,6 @@ class Twitter {
 		return $this->friends_timeline;
 	}
 	
-	/*
-		
-	*/
 	function user_timeline($id = '', $count = '', $since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
