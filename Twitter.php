@@ -58,8 +58,10 @@ class Twitter {
 	function friends_timeline($count = '', $since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('count' => $count, 'since' => $since, 'since_id' => $since_id, 'page' => $page));
+		
 		if (empty($this->friends_timeline)){
-			$this->friends_timeline = $this->_fetch('http://twitter.com/statuses/friends_timeline.xml');
+			$this->friends_timeline = $this->_fetch('http://twitter.com/statuses/friends_timeline.xml' . $params);
 		}
 		
 		return $this->friends_timeline;
@@ -68,8 +70,10 @@ class Twitter {
 	function user_timeline($id = '', $count = '', $since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('id' => $id, 'count' => $count, 'since' => $since, 'since_id' => $since_id, 'page' => $page));
+		
 		if (empty($this->user_timeline)){
-			$this->user_timeline = $this->_fetch('http://twitter.com/statuses/user_timeline.xml');
+			$this->user_timeline = $this->_fetch('http://twitter.com/statuses/user_timeline.xml' . $params);
 		}
 		
 		return $this->user_timeline;
@@ -83,8 +87,10 @@ class Twitter {
 	function replies($since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
+		
 		if (empty($this->replies)){
-			$this->replies = $this->_fetch('http://twitter.com/statuses/replies.xml');
+			$this->replies = $this->_fetch('http://twitter.com/statuses/replies.xml' . $params);
 		}
 		
 		return $this->replies;
@@ -93,8 +99,10 @@ class Twitter {
 	function friends($id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('id' => $id, 'page' => $page));
+		
 		if (empty($this->friends)){
-			$this->friends = $this->_fetch('http://twitter.com/statuses/friends.xml');
+			$this->friends = $this->_fetch('http://twitter.com/statuses/friends.xml' . $params);
 		}
 		
 		return $this->friends;
@@ -103,8 +111,10 @@ class Twitter {
 	function followers($id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('id' => $id, 'page' => $page));
+		
 		if (empty($this->followers)){
-			$this->followers = $this->_fetch('http://twitter.com/statuses/friends.xml');
+			$this->followers = $this->_fetch('http://twitter.com/statuses/friends.xml' . $params);
 		}	
 			
 		return $this->followers;
@@ -118,8 +128,10 @@ class Twitter {
 	function direct_messages($since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
+		
 		if (empty($this->direct_messages)){
-			$this->direct_messages = $this->_fetch('http://twitter.com/direct_messages.xml');
+			$this->direct_messages = $this->_fetch('http://twitter.com/direct_messages.xml' . $params);
 		}
 		
 		return $this->direct_messages;
@@ -128,8 +140,10 @@ class Twitter {
 	function sent_direct_messages($since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
+		$params = $this->_build_params(array('since' => $since, 'since_id' => $since_id, 'page' => $page));
+		
 		if (empty($this->sent_direct_messages)){
-			$this->sent_direct_messages = $this->_fetch('http://twitter.com/direct_messages/sent.xml');
+			$this->sent_direct_messages = $this->_fetch('http://twitter.com/direct_messages/sent.xml' . $params);
 		}
 		
 		return $this->sent_direct_messages;
@@ -137,7 +151,8 @@ class Twitter {
 	
 	function friendship_exists($user_a = '', $user_b = ''){
 		if (!$this->auth){ return false; }
-		return $this->_fetch('http://twitter.com/friendships/exists.xml?user_a='.$user_a.'&user_b=' . $user_b);
+		$friends = (string) $this->_fetch('http://twitter.com/friendships/exists.xml?user_a='.$user_a.'&user_b=' . $user_b);
+		return ($friends == 'true') ? true : false;
 	}
 	
 	function rate_limit_status(){
@@ -147,6 +162,8 @@ class Twitter {
 	
 	function favorites($id = '', $page = ''){
 		if (!$this->auth){ return false; }
+		
+		$params = $this->_build_params(array('id' => $id, 'page' => $page));
 		
 		if (empty($this->favorites)){
 			$this->favorites = $this->_fetch('http://twitter.com/favorites.xml');
@@ -281,10 +298,7 @@ class Twitter {
 	}
 	
 	function _post($url,$array){
-		$params = '';
-		foreach ($array as $key => $value){
-			$params .= $key . '=' . $value . '&';
-		}
+		$params = $this->_build_params($array,FALSE);
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -305,6 +319,20 @@ class Twitter {
 	
 	function _parse_xml($xml){
 		return new SimpleXMLElement($xml); // if you don't like SimpleXML, change it!
+	}
+	
+	function _build_params($array, $query_string = TRUE){
+		$params = '';
+		
+		foreach ($array as $key => $value){
+			if (!empty($value)){
+				$params .= $key . '=' . $value . '&';
+			}
+		}
+		
+		$character = ($query_string) ? '?' : '';
+		
+		return (!empty($params)) ? $character . $params : '';
 	}
 	
 }
