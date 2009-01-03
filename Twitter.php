@@ -286,6 +286,36 @@ class Twitter {
 		return $this->_post('http://twitter.com/account/update_profile.' . $this->type, $params);
 	}
 	
+	function update_delivery_device($device = 'none'){
+		$params = array('device' => $device);
+		
+		return $this->_post('http://twitter.com/account/update_delivery_device.' . $this->type, $params);
+	}
+	
+	function update_profile_colors($profile_background_color = '', $profile_text_color = '', $profile_link_color = '', $profile_sidebar_fill_color = '', $profile_sidebar_border_color = ''){
+		if (!empty($profile_background_color)){
+			$params['profile_background_color'] = $profile_background_color;
+		}
+		
+		if (!empty($profile_text_color)){
+			$params['profile_text_color'] = $profile_text_color;
+		}
+		
+		if (!empty($profile_link_color)){
+			$params['profile_link_color'] = $profile_link_color;
+		}
+		
+		if (!empty($profile_sidebar_fill_color)){
+			$params['profile_sidebar_fill_color'] = $profile_sidebar_fill_color;
+		}
+		
+		if (!empty($profile_sidebar_border_color)){
+			$params['profile_sidebar_border_color'] = $profile_sidebar_border_color;
+		}
+		
+		return $this->_post('http://twitter.com/account/update_profile_image.' . $this->type, $params);
+	}
+	
 	/*
 		Search Methods
 	*/
