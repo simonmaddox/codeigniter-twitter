@@ -17,8 +17,6 @@ the class.
 Future
 ------
 
-Add API methods not currently implemented
-
 JSON support
 
 Twitter Trends (requires JSON)
