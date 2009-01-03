@@ -25,6 +25,8 @@ class Twitter {
 	var $auth;
 	var $user;
 	
+	var $last_error;
+	
 	var $friends_timeline;
 	var $replies;
 	var $friends;
@@ -315,6 +317,7 @@ class Twitter {
 		if ($status == '200'){
 			return $this->_parse_returned($returned);
 		} else {
+			$this->last_error = $status;
 			return false;
 		}
 	}
@@ -336,6 +339,7 @@ class Twitter {
 		if ($status == '200'){
 			return $this->_parse_returned($returned);
 		} else {
+			$this->last_error = $status;
 			return false;
 		}
 	}
@@ -356,6 +360,10 @@ class Twitter {
 		$character = ($query_string) ? '?' : '';
 		
 		return (!empty($params)) ? $character . $params : '';
+	}
+	
+	function get_last_error(){
+		return $this->last_errow;
 	}
 	
 }
