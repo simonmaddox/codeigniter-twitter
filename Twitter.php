@@ -313,6 +313,14 @@ class Twitter {
 			$params['profile_sidebar_border_color'] = $profile_sidebar_border_color;
 		}
 		
+		return $this->_post('http://twitter.com/account/update_profile_colors.' . $this->type, $params);
+	}
+	
+	function update_profile_image($image = ''){ // this should be raw multipart data, not a url
+		if (!empty($image)){
+			$params['image'] = $image;
+		}
+		
 		return $this->_post('http://twitter.com/account/update_profile_image.' . $this->type, $params);
 	}
 	
