@@ -29,3 +29,6 @@ Extra
 
 If you'd like to request changes, report bug fixes, or contact
 the developer of this library, email <simon@simonmaddox.com>
+
+Also: This library isn't CodeIgniter specific. It has been
+tested in Kohana and as a normal PHP class.
