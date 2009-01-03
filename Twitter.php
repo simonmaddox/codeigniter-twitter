@@ -360,6 +360,14 @@ class Twitter {
 		return $this->_fetch('http://search.twitter.com/search.atom' . $params);
 	}
 	
+	function trends(){
+		if (!function_exists('json_decode')){
+			return false;
+		}
+
+		return $this->_fetch('http://search.twitter.com/trends.json');
+	}
+	
 	/*
 		System Methods
 	*/
@@ -409,7 +417,7 @@ class Twitter {
 	function _parse_returned($xml, $url){
 		$segments = explode('.',$url);
 		
-		switch ($segments[2]){
+		switch (end($segments)){
 			case 'xml':
 			case 'atom':
 			case 'rss':
