@@ -311,13 +311,13 @@ class Twitter {
 		curl_close ($ch);
 		
 		if ($status == '200'){
-			return $this->_parse_xml($returned);
+			return $this->_parse_returned($returned);
 		} else {
 			return false;
 		}
 	}
 	
-	function _parse_xml($xml){
+	function _parse_returned($xml){
 		return new SimpleXMLElement($xml); // if you don't like SimpleXML, change it!
 	}
 	
