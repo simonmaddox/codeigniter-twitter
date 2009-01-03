@@ -324,10 +324,10 @@ class Twitter {
 		return $this->_post('http://twitter.com/account/update_profile_image.' . $this->type, $params);
 	}
 	
-	function update_profile_image_url($url){
+	/*function update_profile_image_url($url){
 		$image = file_get_contents($url);
 		return $this->update_profile_image($image);
-	}
+	}*/
 	
 	function update_profile_background_image($image = ''){ // this should be raw multipart data, not a url
 		if (!empty($image)){
@@ -337,10 +337,10 @@ class Twitter {
 		return $this->_post('http://twitter.com/account/update_profile_background_image.' . $this->type, $params);
 	}
 	
-	function update_profile_background_image_url($url){
+	/*function update_profile_background_image_url($url){
 		$image = file_get_contents($url);
 		return $this->update_profile_background_image($image);
-	}
+	}*/
 	
 	/*
 		Search Methods
@@ -396,7 +396,7 @@ class Twitter {
 		$returned = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close ($ch);
-		
+
 		if ($status == '200'){
 			return $this->_parse_returned($returned);
 		} else {
