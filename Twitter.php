@@ -281,6 +281,24 @@ class Twitter {
 	}
 	
 	/*
+		Search Methods
+	*/
+	
+	function search($query = 'twitter', $lang = '', $rpp = '', $page = '', $since_id = '', $geocode = '', $show_user = FALSE){
+		$params = $this->_build_params(array(
+				'q' => $query,
+				'lang' => $lang,
+				'rpp' => $rpp,
+				'page' => $page,
+				'since_id' => $since_id,
+				'geocode' => $geocode,
+				'show_user' => $show_user
+			));
+			
+		return $this->_fetch('http://search.twitter.com/search.atom' . $params);
+	}
+	
+	/*
 		System Methods
 	*/
 	
