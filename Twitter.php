@@ -60,6 +60,10 @@ class Twitter {
 		GET Methods
 	*/
 	
+	function public_timeline(){
+		return $this->_fetch('http://twitter.com/statuses/public_timeline.' . $this->type);
+	}
+	
 	function friends_timeline($count = '', $since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
