@@ -1,5 +1,21 @@
 <?php
 
+/**
+* A CodeIgniter library to allow use of the Twitter API
+*
+* Example Usage:
+*
+*	$this->load->library('twitter');
+*	$this->twitter->auth('someuser','somepass');
+*	$this->twitter->update('My awesome tweet!');
+*
+* Methods return a mixture of boolean and SimpleXML objects
+*
+* @author Simon Maddox <simon@simonmaddox.com>
+* @license Creative Commons Attribution-Share Alike 3.0 Unported
+* http://creativecommons.org/licenses/by-sa/3.0/
+**/
+
 class Twitter {
 	var $username;
 	var $password;
@@ -49,6 +65,9 @@ class Twitter {
 		return $this->friends_timeline;
 	}
 	
+	/*
+		
+	*/
 	function user_timeline($id = '', $count = '', $since = '', $since_id = '', $page = ''){
 		if (!$this->auth){ return false; }
 		
