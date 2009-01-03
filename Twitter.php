@@ -39,7 +39,7 @@ class Twitter {
 		$this->username = $username;
 		$this->password = $password;
 		
-		$user = $this->_fetch('http://twitter.com/account/verify_credentials.xml');
+		$user = $this->_fetch('http://twitter.com/account/verify_credentials.' . $this->type);
 		
 		if ($user == false){
 			$this->auth = false;
