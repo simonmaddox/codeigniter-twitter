@@ -17,7 +17,8 @@ the class.
 Future
 ------
 
-What else is there?
+The returned data needs to be of the same type, whether it's
+XML or JSON
 
 Extra
 -----
