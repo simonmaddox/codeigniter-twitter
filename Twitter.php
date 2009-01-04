@@ -9,7 +9,7 @@
 *	$this->twitter->auth('someuser','somepass');
 *	$this->twitter->update('My awesome tweet!');
 *
-* Methods return a mixture of boolean and SimpleXML objects
+* Methods return a mixture of boolean and stdObjects
 *
 * @author Simon Maddox <simon@simonmaddox.com>
 * @license Creative Commons Attribution-Share Alike 3.0 Unported
