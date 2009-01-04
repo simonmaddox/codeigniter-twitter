@@ -432,6 +432,23 @@ class Twitter {
 	}
 	
 	function _build_return($data,$type){
+		if ($type == 'xml'){
+			$data = json_decode(json_encode($data)); // convert SimpleXML object to stdObject
+			
+			// We need to figure out if there is only one "real" node (aside from @attributes - if there is, return that as the parent)
+			
+			$keys = array();
+
+			foreach($data as $key => $value){
+				if ($key !== '@attributes'){
+					$keys[] = $key;
+				}
+			}
+			if (count($keys) == 1){
+				return $data->$keys[0];
+			}
+		}
+		
 		return $data;
 	}
 	
