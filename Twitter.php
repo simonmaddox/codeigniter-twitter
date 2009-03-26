@@ -85,6 +85,10 @@ class Twitter {
 			$this->user_timeline = $this->_fetch('http://twitter.com/statuses/user_timeline.' . $this->type . $params);
 		}
 		
+		foreach($this->user_timeline as &$message) {
+			$message->text = $this->_parse_message($message->text);
+		}
+		
 		return $this->user_timeline;
 	}
 	
@@ -426,6 +430,44 @@ class Twitter {
 				break;
 		}
 	}
+	
+	/*
+		Message parsing by Phil Sturgeon - http://philsturgeon.co.uk
+	*/
+	
+	function _parse_message($text){
+		
+		$patterns = array(
+	
+			// Detect URL's
+			'|([a-z]{3,9}://[a-z0-9-_./\\\?&\+]*)|i'
+				=>
+			'<a href="$0" target="_blank">$0</a>',
+			
+			// Detect Email
+			'|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}|i'
+				=>
+			'<a href="mailto:$0">$0</a>',
+			
+			// Detect Twitter @usernames
+			'|@([a-z0-9-_]+)|i'
+				=>
+			'<a href="http://twitter.com/$1" target="_blank">$0</a>',
+			
+			// Detect Twitter #tags
+			'|#([a-z0-9-_]+)|i'
+				=>
+			'<a href="http://twitter.com/search?q=%23$1" target="_blank">$0</a>'
+		);
+		
+		foreach($patterns as $regex => $replace)
+		{
+			$text = preg_replace($regex, $replace, $text);
+		}
+		
+		return $text;
+	}
+	
 	
 	function _build_return($data,$type){
 		if ($type == 'xml'){
