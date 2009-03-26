@@ -27,3 +27,9 @@ Extra
 
 If you'd like to request changes, report bug fixes, or contact
 the developer of this library, email <simon@simonmaddox.com>
+
+Thanks
+------
+
+Noah Stokes
+Phil Sturgeon - http://philsturgeon.co.uk
