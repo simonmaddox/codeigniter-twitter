@@ -94,7 +94,7 @@ class Twitter {
 	
 	function show($id = 55){
 		if (!$this->auth){ return false; }
-		return $this->_fetch('http://twitter.com/statuses/show/'.$id.'.xml');
+		$message =& $this->_fetch('http://twitter.com/statuses/show/'.$id.'.xml');
 	}
 	
 	function replies($since = '', $since_id = '', $page = ''){
