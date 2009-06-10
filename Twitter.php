@@ -377,6 +377,16 @@ class Twitter {
 	*/
 	
 	function _fetch($url){
+		
+		if (!function_exists('curl_init')) {
+            
+			if(function_exists('log_message')) {
+				log_message('error', 'Twitter - PHP was not built with cURL enabled. Rebuild PHP with --with-curl to use cURL.') ;
+			}
+			
+			return false;
+		}
+		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -390,7 +400,12 @@ class Twitter {
 			return $this->_parse_returned($returned, $url);
 		} else {
 			$error_data = $this->_parse_returned($returned, $url);
-			$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
+			
+			// Server not found fix #1
+			if($error_data) {
+				$this->last_error = array('status' => $status, 'request' => $error_data->request, 'error' => $error_data->error);
+			}
+			
 			return false;
 		}
 	}
@@ -419,6 +434,10 @@ class Twitter {
 	}
 	
 	function _parse_returned($xml, $url){		
+		
+		// Server not found fix #2
+		if(empty($xml)) return false;
+		
 		switch ($this->type){
 			case 'xml':
 			case 'atom':
