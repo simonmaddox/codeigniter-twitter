@@ -514,7 +514,7 @@ class Twitter {
 		
 		foreach ($array as $key => $value){
 			if (!empty($value)){
-				$params .= $key . '=' . $value . '&';
+				$params .= urlencode($key) . '=' . urlencode($value) . '&';
 			}
 		}
 		
