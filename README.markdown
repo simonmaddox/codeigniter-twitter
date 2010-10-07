@@ -1,6 +1,8 @@
 CodeIgniter-Twitter
 ===================
 
+# Please note this library no longer works now that Twitter have turned off Basic Authentication
+
 CodeIgniter-Twitter is a CodeIgniter library which assists in the 
 development of applications using the Twitter API.
 
